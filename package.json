@@ -1,0 +1,37 @@
+{
+  "name": "klict-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "start": "npm run build && node dist/index.js",
+    "dev": "npm run build && nodemon dist/index.js",
+    "cron:job": "npm run build && node dist/cron-job.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klict/klict-whatsapp-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klict/klict-whatsapp-bot/issues"
+  },
+  "homepage": "https://github.com/klict/klict-whatsapp-bot#readme",
+  "dependencies": {
+    "@types/node": "^12.12.17",
+    "chuck-norris-api": "^1.0.9",
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3",
+    "nodemon": "^2.0.2",
+    "prompt": "^1.0.0",
+    "prompt-list": "^3.2.0",
+    "puppeteer": "^2.0.0",
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^2.0.0"
+  }
+}

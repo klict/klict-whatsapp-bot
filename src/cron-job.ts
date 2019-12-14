@@ -7,6 +7,22 @@ const puppeteer = require("puppeteer");
 const cron = require("node-cron");
 const express = require("express");
 const app = express();
+const group = 'Moraalloos';
+
+function getChuckNorrisJoke(): Promise<string> {
+    const api = require('chuck-norris-api');
+    return new Promise<string>(resolve => {
+        api.getRandom().then(async function (data) {
+            let message = "No chuck norris fact joke for this morning:(";
+
+            if (data) {
+                message = data.value.joke;
+            }
+
+            resolve(message);
+        });
+    });
+}
 
 
 // schedule tasks to be run on the server
@@ -21,30 +37,19 @@ cron.schedule("0 4 * * *", async () => {
         });
         const page = await browser.newPage();
         const whatsappWebApi = new WhatsappWebApi(page);
-        const api = require('chuck-norris-api');
         const fs = require("fs");
 
-
-        api.getRandom().then(function (data) {
-            console.log(data.value.joke);
-        });
-
         await whatsappWebApi.init();
-        api.getRandom().then(async function (data) {
-            let message = "No chuck norris fact joke for this morning:(";
-
-            if (data) {
-                message = data.value.joke;
-            }
-
-            await whatsappWebApi.sendMessageToGroup('Dev Meetups', message);
-            await page.close();
-            await browser.close();
-        });
+        const message =  await getChuckNorrisJoke();
+        await whatsappWebApi.sendMessageToGroup(group, message);
+        await page.close();
+        await browser.close();
     } catch (e) {
         console.error(e);
         process.exit(1);
     }
 });
 
-app.listen("3128");
+app.listen("5645", () => {
+    console.log("Server Bootup and cronjobs on");
+});
