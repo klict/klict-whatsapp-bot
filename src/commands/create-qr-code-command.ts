@@ -24,7 +24,6 @@ export class CreateQrCodeCommand implements Command {
                     });
 
                     rli.question('done ', function(answer) {
-                        console.log('You said your name is: ' + answer);
                         rli.close();
                         resolve();
                     });
